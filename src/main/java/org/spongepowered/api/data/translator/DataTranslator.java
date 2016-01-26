@@ -24,40 +24,39 @@
  */
 package org.spongepowered.api.data.translator;
 
+import org.spongepowered.api.CatalogType;
 import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataSerializable;
 import org.spongepowered.api.data.DataView;
+import org.spongepowered.api.util.annotation.CatalogedBy;
 
 /**
- * A translator that can translate {@link DataView}s into other types of data structures
- * for various uses, such as configurate's configuration node, or for implementation with
- * NBT.
+ * A translator that can translate {@link DataView}s into other types which do
+ * not implement {@link DataSerializable}.
  *
- * @param <T> The type of data structure to translate to and from
+ * @param <T> The type to translate to and from
  */
-public interface DataTranslator<T> {
+@CatalogedBy(DataTranslators.class)
+public interface DataTranslator<T> extends CatalogType {
 
     /**
-     * Translates the given {@link DataView} into the type of data structure.
+     * Translates the given {@link DataView} into the type.
      *
      * @param container The container to translate
-     * @return The data structure
+     * @return A new instance of the type
      */
     T translateData(DataView container);
 
     /**
-     * Translates the given {@link DataView} into the given data structure.
+     * Translates the given {@link DataView} into the type. 
      *
-     * <p>This assumes that the given data structure will be the top level node
-     * of the data contained in the {@link DataView}.</p>
-     *
-     * @param node The node to store data
+     * @param object The node to store data
      * @param container The container of data to translate
      */
-    void translateContainerToData(T node, DataView container);
+    void translateContainerToData(T object, DataView container);
 
     /**
-     * Translates the given data structure into a usable {@link DataView} that
-     * can be used with the rest of DataAPI.
+     * Translates the given data structure into a {@link DataView}.
      *
      * @param node The data structure containing raw data
      * @return The newly created and translated {@link DataView}

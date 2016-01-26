@@ -30,7 +30,7 @@ import org.spongepowered.api.data.persistence.InvalidDataException;
 import java.util.List;
 import java.util.Optional;
 
-class SimpleDataBuilder implements DataBuilder<SimpleData> {
+public class SimpleDataBuilder implements DataBuilder<SimpleData> {
 
     @Override
     public Optional<SimpleData> build(final DataView container) {

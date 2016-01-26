@@ -30,14 +30,14 @@ import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
 import java.util.List;
 
-class SimpleData implements DataSerializable {
+public class SimpleData implements DataSerializable {
 
     private final int testInt;
     private final double testDouble;
     private final String testString;
     private final String[] testList;
 
-    SimpleData(int testInt, double testDouble, String testString, List<String> testList) {
+    public SimpleData(int testInt, double testDouble, String testString, List<String> testList) {
         this.testInt = testInt;
         this.testDouble = testDouble;
         this.testString = testString;
