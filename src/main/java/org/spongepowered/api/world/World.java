@@ -26,6 +26,7 @@ package org.spongepowered.api.world;
 
 import com.flowpowered.math.vector.Vector3d;
 import com.flowpowered.math.vector.Vector3i;
+import com.google.common.util.concurrent.ListenableFuture;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.effect.Viewer;
 import org.spongepowered.api.entity.Entity;
@@ -44,7 +45,6 @@ import org.spongepowered.api.world.weather.WeatherUniverse;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.Future;
 
 /**
  * A loaded Minecraft world.
@@ -76,7 +76,7 @@ public interface World extends Extent, WeatherUniverse, Viewer, ContextSource, C
      *
      * @param r Runnable to post
      */
-    Future<Object> post(Runnable r);
+    ListenableFuture<Object> post(Runnable r);
 
     /**
      * Gets the {@link Difficulty} setting for this world.

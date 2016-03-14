@@ -25,10 +25,17 @@
 package org.spongepowered.api.event.message;
 
 import org.spongepowered.api.event.Cancellable;
+import org.spongepowered.api.event.impl.AbstractChatEvent;
+import org.spongepowered.api.eventgencore.annotation.ImplementedBy;
+import org.spongepowered.api.eventgencore.annotation.PropertySettings;
+import org.spongepowered.api.service.permission.Subject;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.channel.MessageChannel;
+import org.spongepowered.api.world.World;
 
+import java.util.LinkedList;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
@@ -67,7 +74,14 @@ public interface MessageChannelEvent extends MessageEvent {
     /**
      * Fired when the {@link Text} being sent to a {@link MessageChannel} was due to chatting.
      */
+    @ImplementedBy(AbstractChatEvent.class)
     interface Chat extends MessageChannelEvent, Cancellable {
+
+        @PropertySettings(requiredParameter = false, generateMethods = false)
+        void checkPermission(World world, String permission, Subject subject, Consumer<Boolean> action);
+
+        @PropertySettings(requiredParameter = false)
+        LinkedList<AbstractChatEvent.PermissionCheck> getPermissionChecks();
 
         /**
          * Gets the 'raw' chat message.
