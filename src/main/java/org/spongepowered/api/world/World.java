@@ -44,6 +44,7 @@ import org.spongepowered.api.world.weather.WeatherUniverse;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.Future;
 
 /**
  * A loaded Minecraft world.
@@ -69,6 +70,13 @@ public interface World extends Extent, WeatherUniverse, Viewer, ContextSource, C
     default Location<World> getLocation(double x, double y, double z) {
         return getLocation(new Vector3d(x, y, z));
     }
+
+    /**
+     * Posts a new {@link Runnable} to be executed on the next tick cycle.
+     *
+     * @param r Runnable to post
+     */
+    Future<Object> post(Runnable r);
 
     /**
      * Gets the {@link Difficulty} setting for this world.
