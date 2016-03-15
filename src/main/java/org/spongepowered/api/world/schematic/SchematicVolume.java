@@ -22,34 +22,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.api.data.persistence;
+package org.spongepowered.api.world.schematic;
 
-import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.world.extent.SnapshotVolume;
 
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
+import java.util.Properties;
 
 /**
- * A pseudo-enum of supported {@link DataFormat}s.
+ * Represents a special {@link SnapshotVolume} which has additional attached
+ * metadata allowing it to be serialized to disk.
  */
-public final class DataFormats {
+public interface SchematicVolume extends SnapshotVolume {
 
     /**
-     * Allows reading and writing {@link DataContainer}s using the
-     * Human-Optimized Config Object Notation (HOCON) configuration format.
-     */
-    public static final DataFormat HOCON = null;
-    /**
-     * Allows reading and writing using the Named Binary Tag format used for the
-     * majority of minecraft's data files.
+     * Gets a {@link Properties} object which represents the metadata attached
+     * to this schematic.
      * 
-     * </p>It is <strong>highly</strong> recommended to wrap your input/output
-     * stream in a {@link GZIPInputStream} or {@link GZIPOutputStream}
-     * respectively as this is the standard.
+     * @return The schematic metadata
      */
-    public static final DataFormat NBT = null;
+    Properties getMetaData();
 
-    private DataFormats() {
-    }
-
+    /**
+     * Gets the {@link BlockPalette} used for serializing this schematic.
+     * 
+     * @return The block palette
+     */
+    BlockPalette getPalette();
+    
+    // TODO entities
 }

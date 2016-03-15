@@ -39,6 +39,7 @@ import org.spongepowered.api.util.PositionOutOfBoundsException;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.extent.worker.MutableBiomeAreaWorker;
 import org.spongepowered.api.world.extent.worker.MutableBlockVolumeWorker;
+import org.spongepowered.api.world.schematic.SchematicVolume;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -432,6 +433,9 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
     default Extent getRelativeExtentView() {
         return getExtentView(DiscreteTransform3.fromTranslation(getBlockMin().negate()));
     }
+    
+    SnapshotVolume getSnapshotView(Vector3i newMin, Vector3i newMax);
+    SchematicVolume getSchematicView(Vector3i newMin, Vector3i newMax);
 
     @Override
     MutableBiomeAreaWorker<? extends Extent> getBiomeWorker();

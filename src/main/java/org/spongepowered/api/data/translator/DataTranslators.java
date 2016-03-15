@@ -27,6 +27,7 @@ package org.spongepowered.api.data.translator;
 import ninja.leaping.configurate.ConfigurationNode;
 import org.spongepowered.api.data.persistence.DataFormats;
 import org.spongepowered.api.world.extent.TileEntityVolume;
+import org.spongepowered.api.world.schematic.SchematicVolume;
 
 /**
  * A pseudo-enum of available {@link DataTranslator}s for various common types.
@@ -57,7 +58,7 @@ public final class DataTranslators {
      * href="https://gist.github.com/Deamon5550/154ced44575c8016118e">here</a>
      * </p>
      */
-    public static final DataTranslator<TileEntityVolume> MCEDIT_SCHEMATIC = null;
+    public static final DataTranslator<SchematicVolume> MCEDIT_SCHEMATIC = null;
 
     private DataTranslators() {
     }

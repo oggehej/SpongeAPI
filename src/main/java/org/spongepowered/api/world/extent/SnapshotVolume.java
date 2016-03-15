@@ -22,34 +22,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.api.data.persistence;
+package org.spongepowered.api.world.extent;
 
-import org.spongepowered.api.data.DataContainer;
+import com.flowpowered.math.vector.Vector3i;
+import org.spongepowered.api.block.BlockSnapshot;
+import org.spongepowered.api.world.extent.worker.MutableBlockVolumeWorker;
 
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
+import java.util.List;
+import java.util.Optional;
 
-/**
- * A pseudo-enum of supported {@link DataFormat}s.
- */
-public final class DataFormats {
+public interface SnapshotVolume extends MutableBlockVolume {
 
-    /**
-     * Allows reading and writing {@link DataContainer}s using the
-     * Human-Optimized Config Object Notation (HOCON) configuration format.
-     */
-    public static final DataFormat HOCON = null;
-    /**
-     * Allows reading and writing using the Named Binary Tag format used for the
-     * majority of minecraft's data files.
-     * 
-     * </p>It is <strong>highly</strong> recommended to wrap your input/output
-     * stream in a {@link GZIPInputStream} or {@link GZIPOutputStream}
-     * respectively as this is the standard.
-     */
-    public static final DataFormat NBT = null;
-
-    private DataFormats() {
+    default Optional<BlockSnapshot> getTileEntity(Vector3i position) {
+        return getTileEntity(position.getX(), position.getY(), position.getZ());
     }
+
+    // TODO replace with some kind of MutableBlockSnapshot
+    Optional<BlockSnapshot> getTileEntity(int x, int y, int z);
+
+    List<BlockSnapshot> getTileEntities();
+
+    @Override
+    MutableBlockVolumeWorker<? extends SnapshotVolume> getBlockWorker();
 
 }
