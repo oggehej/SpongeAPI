@@ -44,6 +44,7 @@ import org.spongepowered.api.world.BlockChangeFlag;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.extent.worker.MutableBiomeAreaWorker;
 import org.spongepowered.api.world.extent.worker.MutableBlockVolumeWorker;
+import org.spongepowered.api.world.schematic.PaletteType;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -466,6 +467,7 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
      * @param uuid The {@link UUID} to set as notifier
      */
     void setNotifier(int x, int y, int z, @Nullable UUID uuid);
+<<<<<<< bb57c3780fcb6789c53e9553799b9299c62b295b
 
     /**
      * Gets the bounding box used to select blocks, which appears
@@ -526,6 +528,6 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
      */
     Set<AABB> getIntersectingCollisionBoxes(Entity owner, AABB box);
 
-    ArchetypeVolume createArchetypeVolume(Vector3i min, Vector3i max);
+    ArchetypeVolume createArchetypeVolume(Vector3i min, Vector3i max, Vector3i origin, PaletteType paletteType);
 
 }
