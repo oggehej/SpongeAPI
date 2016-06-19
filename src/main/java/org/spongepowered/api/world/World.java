@@ -48,6 +48,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 /**
  * A loaded Minecraft world.
@@ -146,6 +147,48 @@ public interface World extends Extent, WeatherUniverse, Viewer, ContextSource, M
      * @return The loaded or generated chunk, if already generated
      */
     Optional<Chunk> loadChunk(int cx, int cy, int cz, boolean shouldGenerate);
+
+    /**
+     * Gets the chunk at the given chunk coordinate position if it exists or if
+     * {@code shouldGenerate} is true and the chunk is generated.
+     *
+     * <p>Unlike {@link #loadChunk(Vector3i, boolean)} this method allows the
+     * implementation to load the chunk asynchronously without blocking the
+     * main server thread. The callback will be called with the chunk once
+     * the operation was completed.</p>
+     *
+     * <p><b>Note:</b> If asynchronous chunk loading is not supported by
+     * the implementation, the chunk will be loaded synchronously and the
+     * callback will be called directly.</p>
+     *
+     * @param chunkPosition The position
+     * @param shouldGenerate True to generate a new chunk
+     * @param callback The callback called once the chunk was loaded
+     */
+    default void loadChunk(Vector3i chunkPosition, boolean shouldGenerate, Consumer<Optional<Chunk>> callback) {
+        loadChunk(chunkPosition.getX(), chunkPosition.getY(), chunkPosition.getZ(), shouldGenerate, callback);
+    }
+
+    /**
+     * Gets the chunk at the given chunk coordinate position if it exists or if
+     * {@code shouldGenerate} is true and the chunk is generated.
+     *
+     * <p>Unlike {@link #loadChunk(int, int, int, boolean)} this method allows
+     * the implementation to load the chunk asynchronously without blocking the
+     * main server thread. The callback will be called with the chunk once
+     * the operation was completed.</p>
+     *
+     * <p><b>Note:</b> If asynchronous chunk loading is not supported by
+     * the implementation, the chunk will be loaded synchronously and the
+     * callback will be called directly.</p>
+     *
+     * @param cx The x coordinate
+     * @param cy The y coordinate
+     * @param cz The z coordinate
+     * @param shouldGenerate True to generate a new chunk
+     * @param callback The callback called once the chunk was loaded
+     */
+    void loadChunk(int cx, int cy, int cz, boolean shouldGenerate, Consumer<Optional<Chunk>> callback);
 
     /**
      * Unloads the given chunk from the world. Returns a {@code boolean} flag
