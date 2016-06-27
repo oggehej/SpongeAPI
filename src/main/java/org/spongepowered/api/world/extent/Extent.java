@@ -467,6 +467,7 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
      * @param uuid The {@link UUID} to set as notifier
      */
     void setNotifier(int x, int y, int z, @Nullable UUID uuid);
+<<<<<<< b26054ad08ac91e63a428f6fe5240df87c949632
 <<<<<<< 4fd3b2bb7a9fd90318cd1fb0281e3c52c87c540b
 <<<<<<< 5a16930138feb548a98b3a1a204b1d093ca6d4fa
 <<<<<<< bb57c3780fcb6789c53e9553799b9299c62b295b
@@ -530,6 +531,6 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
      */
     Set<AABB> getIntersectingCollisionBoxes(Entity owner, AABB box);
 
-    ArchetypeVolume createArchetypeVolume(Vector3i min, Vector3i max, boolean storeEntities);
+    ArchetypeVolume createArchetypeVolume(Vector3i min, Vector3i max, Vector3i origin, boolean storeEntities);
 
 }
