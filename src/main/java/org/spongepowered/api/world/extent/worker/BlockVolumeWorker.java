@@ -24,6 +24,7 @@
  */
 package org.spongepowered.api.world.extent.worker;
 
+import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.world.extent.BlockVolume;
 import org.spongepowered.api.world.extent.MutableBlockVolume;
 import org.spongepowered.api.world.extent.worker.procedure.BlockVolumeVisitor;
@@ -53,21 +54,21 @@ public interface BlockVolumeWorker<V extends BlockVolume> {
     /**
      * Applies a mapping operation to all the blocks in the volume and saves the
      * results to the destination volume.
-     *
-     * @param mapper The mapping operation
+     *  @param mapper The mapping operation
      * @param destination The destination volume
+     * @param cause
      */
-    void map(BlockVolumeMapper mapper, MutableBlockVolume destination);
+    void map(BlockVolumeMapper mapper, MutableBlockVolume destination, Cause cause);
 
     /**
      * Applies a merging operation to the blocks of the operating volume and an
      * external one. Saves the results to the destination volume.
-     *
-     * @param second The volume to merge with
+     *  @param second The volume to merge with
      * @param merger The merging operation
      * @param destination The destination volume
+     * @param cause
      */
-    void merge(BlockVolume second, BlockVolumeMerger merger, MutableBlockVolume destination);
+    void merge(BlockVolume second, BlockVolumeMerger merger, MutableBlockVolume destination, Cause cause);
 
     /**
      * Iterates this block volume, calling the visitor on each coordinate

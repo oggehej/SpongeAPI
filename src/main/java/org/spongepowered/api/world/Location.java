@@ -51,6 +51,7 @@ import org.spongepowered.api.data.merge.MergeFunction;
 import org.spongepowered.api.data.persistence.InvalidDataException;
 import org.spongepowered.api.data.value.BaseValue;
 import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.util.Direction;
 import org.spongepowered.api.world.biome.BiomeType;
 import org.spongepowered.api.world.extent.Extent;
@@ -518,8 +519,8 @@ public final class Location<E extends Extent> implements DataHolder {
      *
      * @param state The new block state
      */
-    public void setBlock(BlockState state) {
-        getExtent().setBlock(getBlockPosition(), state);
+    public boolean setBlock(BlockState state, Cause cause) {
+        return getExtent().setBlock(getBlockPosition(), state, cause);
     }
 
     /**
@@ -531,8 +532,8 @@ public final class Location<E extends Extent> implements DataHolder {
      * @param notifyNeighbors Whether or not you want to notify neighboring
      * blocks of this change. If true, this may cause blocks to change.
      */
-    public void setBlock(BlockState state, boolean notifyNeighbors) {
-        getExtent().setBlock(getBlockPosition(), state, notifyNeighbors);
+    public boolean setBlock(BlockState state, boolean notifyNeighbors, Cause cause) {
+        return getExtent().setBlock(getBlockPosition(), state, notifyNeighbors, cause);
     }
 
     /**
@@ -542,8 +543,8 @@ public final class Location<E extends Extent> implements DataHolder {
      *
      * @param type The new type
      */
-    public void setBlockType(BlockType type) {
-        getExtent().setBlockType(getBlockPosition(), type);
+    public boolean setBlockType(BlockType type, Cause cause) {
+        return getExtent().setBlockType(getBlockPosition(), type, cause);
     }
 
     /**
@@ -555,8 +556,8 @@ public final class Location<E extends Extent> implements DataHolder {
      * @param notifyNeighbors Whether or not you want to notify neighboring
      * blocks of this change. If true, this may cause blocks to change.
      */
-    public void setBlockType(BlockType type, boolean notifyNeighbors) {
-        getExtent().setBlockType(getBlockPosition(), type, notifyNeighbors);
+    public boolean setBlockType(BlockType type, boolean notifyNeighbors, Cause cause) {
+        return getExtent().setBlockType(getBlockPosition(), type, notifyNeighbors, cause);
     }
 
     /**
@@ -582,8 +583,8 @@ public final class Location<E extends Extent> implements DataHolder {
      * <p>This will remove any extended block data at the given position.</p>
      */
     @SuppressWarnings("ConstantConditions")
-    public void removeBlock() {
-        getExtent().setBlockType(getBlockPosition(), BlockTypes.AIR, true);
+    public boolean removeBlock(Cause cause) {
+        return getExtent().setBlockType(getBlockPosition(), BlockTypes.AIR, true, cause);
     }
 
     @Override

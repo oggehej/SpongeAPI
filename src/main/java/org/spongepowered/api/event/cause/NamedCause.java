@@ -31,6 +31,7 @@ import com.google.common.base.Objects;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.command.args.CommandArgs;
 import org.spongepowered.api.entity.living.player.User;
+import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.profile.GameProfile;
 
 /**
@@ -52,6 +53,7 @@ public final class NamedCause {
     public static final String SOURCE = "Source";
     public static final String THROWER = "Thrower";
     public static final String PLAYER_SIMULATED = "PlayerSimulated";
+    public static final String PLUGIN_CONTAINER = "PluginContainer";
 
     public static NamedCause source(Object object) {
         return of(SOURCE, object);
@@ -81,6 +83,10 @@ public final class NamedCause {
 
     public static NamedCause simulated(GameProfile profile) {
         return of(PLAYER_SIMULATED, profile);
+    }
+
+    public static NamedCause plugin(PluginContainer container) {
+        return of(PLUGIN_CONTAINER, container);
     }
 
     public static NamedCause of(String name, Object object) {

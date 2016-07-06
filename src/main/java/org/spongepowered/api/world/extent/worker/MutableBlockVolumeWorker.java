@@ -24,6 +24,7 @@
  */
 package org.spongepowered.api.world.extent.worker;
 
+import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.world.extent.BlockVolume;
 import org.spongepowered.api.world.extent.MutableBlockVolume;
 import org.spongepowered.api.world.extent.worker.procedure.BlockVolumeFiller;
@@ -39,36 +40,37 @@ import org.spongepowered.api.world.extent.worker.procedure.BlockVolumeMerger;
 public interface MutableBlockVolumeWorker<V extends MutableBlockVolume> extends BlockVolumeWorker<V> {
 
     /**
-     * Similar to {@link BlockVolumeWorker#map(BlockVolumeMapper,
-     * MutableBlockVolume)} but uses the operating volume as the destination.
+     * Similar to {@link BlockVolumeWorker#map(BlockVolumeMapper, MutableBlockVolume, org.spongepowered.api.event.cause.Cause)} but uses the operating volume as the destination.
      * Precautions must be taken as the volume is modified while the operation
      * is being performed, and so the surrounding blocks might not be the
      * original ones.
      *
      * @param mapper The mapping operation
+     * @param cause
      */
-    default void map(BlockVolumeMapper mapper) {
-        map(mapper, getVolume());
+    default void map(BlockVolumeMapper mapper, Cause cause) {
+        map(mapper, getVolume(), cause);
     }
 
     /**
-     * Similar to {@link BlockVolumeWorker#merge(BlockVolume,
-     * BlockVolumeMerger, MutableBlockVolume)} but uses the operating volume as
+     * Similar to {@link BlockVolumeWorker#merge(BlockVolume, BlockVolumeMerger, MutableBlockVolume, org.spongepowered.api.event.cause.Cause)} but uses the operating volume as
      * the destination. Precautions must be taken as the volume is modified
      * while the operation is being performed, and so the surrounding blocks
      * might not be the original ones.
      *
      * @param merger The merging operation
+     * @param cause
      */
-    default void merge(BlockVolume right, BlockVolumeMerger merger) {
-        merge(right, merger, getVolume());
+    default void merge(BlockVolume right, BlockVolumeMerger merger, Cause cause) {
+        merge(right, merger, getVolume(), cause);
     }
 
     /**
      * Applies a filler operation to the volume.
      *
      * @param filler The filler operation
+     * @param cause
      */
-    void fill(BlockVolumeFiller filler);
+    void fill(BlockVolumeFiller filler, Cause cause);
 
 }

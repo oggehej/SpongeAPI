@@ -96,9 +96,11 @@ public interface EntityUniverse {
      *
      * @param type The type
      * @param position The position
+     * @param cause The plugin provided cause, required for use with the event to
+     *     throw
      * @return An entity, if one was created
      */
-    Optional<Entity> createEntity(EntityType type, Vector3d position);
+    Optional<Entity> createEntity(EntityType type, Vector3d position, Cause cause);
 
     /**
      * Create an entity instance at the given position.
@@ -112,10 +114,11 @@ public interface EntityUniverse {
      *
      * @param type The type
      * @param position The position
+     * @param cause
      * @return An entity, if one was created
      */
-    default Optional<Entity> createEntity(EntityType type, Vector3i position) {
-        return createEntity(type, position.toDouble());
+    default Optional<Entity> createEntity(EntityType type, Vector3i position, Cause cause) {
+        return createEntity(type, position.toDouble(), cause);
     }
 
     /**
@@ -129,9 +132,10 @@ public interface EntityUniverse {
      * systems.</p>
      *
      * @param entityContainer The data container of the entity
+     * @param cause
      * @return An entity, if one was created
      */
-    Optional<Entity> createEntity(DataContainer entityContainer);
+    Optional<Entity> createEntity(DataContainer entityContainer, Cause cause);
 
     /**
      * Create an entity instance at the given position.
@@ -145,9 +149,10 @@ public interface EntityUniverse {
      *
      * @param entityContainer The data container of the entity
      * @param position The position of the entity to spawn at
+     * @param cause The plugin provided cause to throw for the event
      * @return An entity, if one was created
      */
-    Optional<Entity> createEntity(DataContainer entityContainer, Vector3d position);
+    Optional<Entity> createEntity(DataContainer entityContainer, Vector3d position, Cause cause);
 
     /**
      * Creates and restores an {@link Entity} from the provided
@@ -178,7 +183,7 @@ public interface EntityUniverse {
      *
      * <p>The requirements involve that all necessary setup of states and data
      * is already preformed on the entity retrieved from the various
-     * {@link #createEntity(EntityType,Vector3d)} methods. Calling this will
+     * {@link #createEntity(EntityType, Vector3d, Cause)} methods. Calling this will
      * make the now-spawned entity able to be processed by various systems.</p>
      *
      * <p>If the entity was unable to spawn, the entity is not removed, but it

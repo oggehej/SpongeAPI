@@ -27,6 +27,8 @@ package org.spongepowered.api.world.extent;
 import com.flowpowered.math.vector.Vector3i;
 import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
+import org.spongepowered.api.event.block.ChangeBlockEvent;
+import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.util.DiscreteTransform3;
 import org.spongepowered.api.util.PositionOutOfBoundsException;
 import org.spongepowered.api.world.extent.worker.MutableBlockVolumeWorker;
@@ -43,11 +45,13 @@ public interface MutableBlockVolume extends BlockVolume {
      *
      * @param position The position
      * @param block The block
+     * @param cause The plugin provided cause to use for the ensuing {@link ChangeBlockEvent}
+     * @return True if the block change was accepted, in a loaded chunk and not cancelled
      * @throws PositionOutOfBoundsException If the position is outside of the
      *         bounds of the volume
      */
-    default void setBlock(Vector3i position, BlockState block) {
-        setBlock(position.getX(), position.getY(), position.getZ(), block);
+    default boolean setBlock(Vector3i position, BlockState block, Cause cause) {
+        return setBlock(position.getX(), position.getY(), position.getZ(), block, cause);
     }
 
     /**
@@ -57,10 +61,12 @@ public interface MutableBlockVolume extends BlockVolume {
      * @param y The Y position
      * @param z The Z position
      * @param block The block
+     * @param cause The plugin provided cause to use for the ensuing {@link ChangeBlockEvent}
+     * @return True if the block change was accepted, in a loaded chunk and not cancelled
      * @throws PositionOutOfBoundsException If the position is outside of the
      *         bounds of the volume
      */
-    void setBlock(int x, int y, int z, BlockState block);
+    boolean setBlock(int x, int y, int z, BlockState block, Cause cause);
 
     /**
      * Replace the block at this position by a new type.
@@ -69,11 +75,13 @@ public interface MutableBlockVolume extends BlockVolume {
      *
      * @param position The position of the block
      * @param type The new type
+     * @param cause The plugin provided cause to use for the ensuing {@link ChangeBlockEvent}
+     * @return True if the block change was accepted, in a loaded chunk and not cancelled
      * @throws PositionOutOfBoundsException If the position is outside of the
      *         bounds of the area
      */
-    default void setBlockType(Vector3i position, BlockType type) {
-        setBlockType(position.getX(), position.getY(), position.getZ(), type);
+    default boolean setBlockType(Vector3i position, BlockType type, Cause cause) {
+        return setBlockType(position.getX(), position.getY(), position.getZ(), type, cause);
     }
 
     /**
@@ -85,11 +93,13 @@ public interface MutableBlockVolume extends BlockVolume {
      * @param y The Y position
      * @param z The Z position
      * @param type The new type
+     * @param cause The plugin provided cause to use for the ensuing {@link ChangeBlockEvent}
+     * @return True if the block change was accepted, in a loaded chunk and not cancelled
      * @throws PositionOutOfBoundsException If the position is outside of the
      *         bounds of the area
      */
-    default void setBlockType(int x, int y, int z, BlockType type) {
-        setBlock(x, y, z, type.getDefaultState());
+    default boolean setBlockType(int x, int y, int z, BlockType type, Cause cause) {
+        return setBlock(x, y, z, type.getDefaultState(), cause);
     }
 
     /**

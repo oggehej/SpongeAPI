@@ -100,37 +100,9 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
     }
 
     /**
-     * Sets the block at the given position in the world.
-     *
-     * @param position The position
-     * @param block The block
-     * @param notifyNeighbors Whether or not you want to notify neighboring
-     *        blocks of this change. If true, this may cause blocks to change.
-     * @throws PositionOutOfBoundsException If the position is outside of the
-     *         bounds of the volume
-     */
-    default void setBlock(Vector3i position, BlockState block, boolean notifyNeighbors) {
-        setBlock(position.getX(), position.getY(), position.getZ(), block, notifyNeighbors);
-    }
-
-    /**
-     * Sets the block at the given position in the world.
-     *
-     * @param x The X position
-     * @param y The Y position
-     * @param z The Z position
-     * @param block The block
-     * @param notifyNeighbors Whether or not you want to notify neighboring
-     *        blocks of this change. If true, this may cause blocks to change.
-     * @throws PositionOutOfBoundsException If the position is outside of the
-     *         bounds of the volume
-     */
-    void setBlock(int x, int y, int z, BlockState block, boolean notifyNeighbors);
-
-    /**
      * Sets the block at the given position in the world with the provided
      * {@link Cause} will be used for any events thrown. Note that the
-     * difference between this an {@link #setBlock(Vector3i, BlockState)} is
+     * difference between this an {@link MutableBlockVolume#setBlock(Vector3i, BlockState, Cause)} is
      * that no block tracking chaining will take place. Note that there is
      * a requirement that the {@link PluginContainer} of the plugin calling
      * this method is <strong>REQUIRED</strong>.
@@ -140,17 +112,18 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
      * @param notifyNeighbors Whether or not you want to notify neighboring
      *        blocks of this change. If true, this may cause blocks to change.
      * @param cause The cause to use
+     * @return True if the block change was accepted, in a loaded chunk and not cancelled
      * @throws PositionOutOfBoundsException If the position is outside of the
      *         bounds of the volume
      */
-    default void setBlock(Vector3i position, BlockState blockState, boolean notifyNeighbors, Cause cause) {
-        setBlock(position.getX(), position.getY(), position.getZ(), blockState, notifyNeighbors, cause);
+    default boolean setBlock(Vector3i position, BlockState blockState, boolean notifyNeighbors, Cause cause) {
+        return setBlock(position.getX(), position.getY(), position.getZ(), blockState, notifyNeighbors, cause);
     }
 
     /**
      * Sets the block at the given position in the world with the provided
      * {@link Cause} will be used for any events thrown. Note that the
-     * difference between this an {@link #setBlock(Vector3i, BlockState)} is
+     * difference between this an {@link MutableBlockVolume#setBlock(Vector3i, BlockState, Cause)} is
      * that no block tracking chaining will take place. Note that there is
      * a requirement that the {@link PluginContainer} of the plugin calling
      * this method is <strong>REQUIRED</strong>.
@@ -162,49 +135,16 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
      * @param notifyNeighbors Whether or not you want to notify neighboring
      *        blocks of this change. If true, this may cause blocks to change.
      * @param cause The cause to use
+     * @return True if the block change was accepted, in a loaded chunk and not cancelled
      * @throws PositionOutOfBoundsException If the position is outside of the
      *         bounds of the volume
      */
-    void setBlock(int x, int y, int z, BlockState blockState, boolean notifyNeighbors, Cause cause);
-
-    /**
-     * Replace the block at this position by a new type.
-     *
-     * <p>This will remove any extended block data at the given position.</p>
-     *
-     * @param position The position of the block
-     * @param type The new type
-     * @param notifyNeighbors Whether or not you want to notify neighboring
-     *        blocks of this change. If true, this may cause blocks to change.
-     * @throws PositionOutOfBoundsException If the position is outside of the
-     *         bounds of the area
-     */
-    default void setBlockType(Vector3i position, BlockType type, boolean notifyNeighbors) {
-        setBlockType(position.getX(), position.getY(), position.getZ(), type, notifyNeighbors);
-    }
-
-    /**
-     * Replace the block at this position by a new type.
-     *
-     * <p>This will remove any extended block data at the given position.</p>
-     *
-     * @param x The X position
-     * @param y The Y position
-     * @param z The Z position
-     * @param type The new type
-     * @param notifyNeighbors Whether or not you want to notify neighboring
-     *        blocks. If true, this may cause blocks to change.
-     * @throws PositionOutOfBoundsException If the position is outside of the
-     *         bounds of the area
-     */
-    default void setBlockType(int x, int y, int z, BlockType type, boolean notifyNeighbors) {
-        setBlock(x, y, z, type.getDefaultState(), notifyNeighbors);
-    }
+    boolean setBlock(int x, int y, int z, BlockState blockState, boolean notifyNeighbors, Cause cause);
 
     /**
      * Sets the block at the given position in the world with the provided
      * {@link Cause} will be used for any events thrown. Note that the
-     * difference between this an {@link #setBlockType(Vector3i, BlockType)} is
+     * difference between this an {@link MutableBlockVolume#setBlockType(Vector3i, BlockType, Cause)} is
      * that no block tracking chaining will take place. Note that there is
      * a requirement that the {@link PluginContainer} of the plugin calling
      * this method is <strong>REQUIRED</strong>.
@@ -214,17 +154,18 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
      * @param notifyNeighbors Whether or not you want to notify neighboring
      *        blocks of this change. If true, this may cause blocks to change.
      * @param cause The cause to use
+     * @return True if the block change was accepted, in a loaded chunk and not cancelled
      * @throws PositionOutOfBoundsException If the position is outside of the
      *         bounds of the volume
      */
-    default void setBlockType(Vector3i position, BlockType type, boolean notifyNeighbors, Cause cause) {
-        setBlock(position.getX(), position.getY(), position.getZ(), type.getDefaultState(), notifyNeighbors, cause);
+    default boolean setBlockType(Vector3i position, BlockType type, boolean notifyNeighbors, Cause cause) {
+        return setBlock(position.getX(), position.getY(), position.getZ(), type.getDefaultState(), notifyNeighbors, cause);
     }
 
     /**
      * Sets the block at the given position in the world with the provided
      * {@link Cause} will be used for any events thrown. Note that the
-     * difference between this an {@link #setBlockType(Vector3i, BlockType)} is
+     * difference between this an {@link MutableBlockVolume#setBlockType(Vector3i, BlockType, Cause)} is
      * that no block tracking chaining will take place. Note that there is
      * a requirement that the {@link PluginContainer} of the plugin calling
      * this method is <strong>REQUIRED</strong>.
@@ -234,13 +175,14 @@ public interface Extent extends EntityUniverse, TileEntityVolume, InteractableVo
      * @param z The Z position
      * @param type The block
      * @param notifyNeighbors Whether or not you want to notify neighboring
-     *        blocks of this change. If true, this may cause blocks to change.
+     *        blocks of this change. If true, this may cause blocks to change
      * @param cause The cause to use
+     * @return True if the block change was accepted, in a loaded chunk and not cancelled
      * @throws PositionOutOfBoundsException If the position is outside of the
      *         bounds of the volume
      */
-    default void setBlockType(int x, int y, int z, BlockType type, boolean notifyNeighbors, Cause cause) {
-        setBlock(x, y, z, type.getDefaultState(), notifyNeighbors, cause);
+    default boolean setBlockType(int x, int y, int z, BlockType type, boolean notifyNeighbors, Cause cause) {
+        return setBlock(x, y, z, type.getDefaultState(), notifyNeighbors, cause);
     }
 
     /**

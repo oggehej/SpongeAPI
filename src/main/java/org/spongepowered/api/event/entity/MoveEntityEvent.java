@@ -135,4 +135,9 @@ public interface MoveEntityEvent extends TargetEntityEvent, Cancellable {
             void setPortalAgent(PortalAgent portalAgent);
         }
     }
+
+    @GenerateFactoryMethod
+    interface Vehicle extends MoveEntityEvent {
+
+    }
 }
