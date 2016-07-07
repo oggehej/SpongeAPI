@@ -24,9 +24,15 @@
  */
 package org.spongepowered.api.event.item.inventory;
 
-public interface CreativeInventoryEvent extends ClickInventoryEvent {
+import org.spongepowered.api.data.Transaction;
+import org.spongepowered.api.event.Cancellable;
+import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 
-    interface Click extends CreativeInventoryEvent {}
+public interface InteractContainerEvent extends TargetContainerEvent, Cancellable {
 
-    interface Drop extends CreativeInventoryEvent, ClickInventoryEvent.Drop {}
+    Transaction<ItemStackSnapshot> getCursorTransaction();
+
+    interface Open extends InteractContainerEvent {}
+
+    interface Close extends InteractContainerEvent {}
 }

@@ -24,21 +24,39 @@
  */
 package org.spongepowered.api.event.item.inventory;
 
-public interface ClickInventoryEvent extends ChangeInventoryEvent, InteractInventoryEvent {
-    interface Primary extends ClickInventoryEvent {}
+import org.spongepowered.api.item.inventory.Slot;
 
-    interface Middle extends ClickInventoryEvent {}
+public interface ClickInventoryEvent extends ChangeInventoryEvent {
 
-    interface Secondary extends ClickInventoryEvent {}
+    /**
+     * Fired when performing a click on a {@link Slot} with the primary click mouse button.
+     */
+    interface Primary extends ClickInventoryEvent, TargetSlotEvent {}
 
+    /**
+     * Fired when performing a click on a {@link Slot}  with the middle click mouse button.
+     */
+    interface Middle extends ClickInventoryEvent, TargetSlotEvent {}
+
+    /**
+     * Fired when performing a click on a {@link Slot}  with the secondary mouse button.
+     */
+    interface Secondary extends ClickInventoryEvent, TargetSlotEvent {}
+
+    /**
+     * Fired when performing any type of click in creative mode.
+     */
     interface Creative extends ClickInventoryEvent {}
-    
-    interface Shift extends ClickInventoryEvent {
+
+    interface Shift extends ClickInventoryEvent, AffectSlotEvent {
         interface Primary extends Shift, ClickInventoryEvent.Primary {}
 
         interface Secondary extends Shift, ClickInventoryEvent.Secondary {}
     }
 
+    /**
+     * Fired when performing a double click on a {@link Slot}.
+     */
     interface Double extends ClickInventoryEvent.Primary {}
 
     interface Drop extends ClickInventoryEvent, DropItemEvent.Dispense {
@@ -53,7 +71,7 @@ public interface ClickInventoryEvent extends ChangeInventoryEvent, InteractInven
         }
     }
 
-    interface Drag extends ClickInventoryEvent {
+    interface Drag extends ClickInventoryEvent, AffectSlotEvent {
         interface Primary extends Drag, ClickInventoryEvent.Primary {}
 
         interface Secondary extends Drag, ClickInventoryEvent.Secondary {}
